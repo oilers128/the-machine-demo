@@ -27,8 +27,10 @@ const resolveApiBaseUrl = (): string => {
   const rawValue = resolveEnvValue('VITE_API_BASE_URL')
 
   if (!rawValue) {
+    // For demo purposes, use a fallback URL (API calls will fail gracefully if backend doesn't exist)
+    const fallback = import.meta.env.DEV ? 'http://localhost:8000' : '/api'
+    
     if (import.meta.env.DEV) {
-      const fallback = 'http://localhost:8000'
       console.warn(
         [
           'VITE_API_BASE_URL is not defined. Falling back to development default:',
@@ -36,12 +38,9 @@ const resolveApiBaseUrl = (): string => {
           'Set VITE_API_BASE_URL (or VITE_API_BASE_URL_DEV / VITE_API_BASE_URL_PROD) in your environment configuration.',
         ].join(' '),
       )
-      return fallback
     }
-
-    throw new Error(
-      'VITE_API_BASE_URL is not defined. Configure VITE_API_BASE_URL (or environment-specific VITE_API_BASE_URL_PROD) before building for production.',
-    )
+    
+    return fallback
   }
 
   return rawValue.replace(/\/+$/, '')

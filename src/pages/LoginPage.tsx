@@ -7,7 +7,7 @@ const LoginPage = () => {
   const navigate = useNavigate()
   
   useEffect(() => {
-    navigate('/dashboard', { replace: true })
+    navigate('/ops/command-center', { replace: true })
   }, [navigate])
 
   return (
@@ -47,7 +47,7 @@ const LoginPage = () => {
           </Box>
 
           <Typography variant="body2" color="text.secondary" sx={{ textAlign: 'center' }}>
-            Redirecting to dashboard...
+            Redirecting to Intelligence Engine...
           </Typography>
         </Card>
       </Box>

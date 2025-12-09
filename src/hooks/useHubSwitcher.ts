@@ -60,6 +60,9 @@ export function useHubSwitcher(): UseHubSwitcherReturn {
         const savedDefault = localStorage.getItem('the-machine-default-hub') as HubType | null
         if (savedDefault && availableHubs.includes(savedDefault)) {
           setDefaultHub(savedDefault)
+        } else {
+          // Default to Intelligence Engine if no preference is set
+          setDefaultHub(HUBS.OPS_INTELLIGENCE)
         }
       } catch (error) {
         console.error('Failed to load hub preferences:', error)

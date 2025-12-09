@@ -26,7 +26,7 @@ export const AppBar = ({ userMenuItems, onMenuClick }: AppBarProps) => {
     if (path.startsWith('/ops')) {
       return '/ops/command-center'
     }
-    return '/dashboard'
+    return '/ops/command-center' // Default to Intelligence Engine
   }
 
   const logoTo = getLandingPage()

@@ -28,7 +28,7 @@ export const AppRoutes = () => {
           path="/*"
           element={<Dashboard />}
         >
-          <Route index element={<Navigate to="/dashboard" replace />} />
+          <Route index element={<Navigate to="/ops/command-center" replace />} />
           <Route path="dashboard" element={<DashboardHome />} />
           <Route path="data-invalidator" element={<DataInvalidatorFeature />} />
           <Route path="data-synthesis" element={<DataSynthesisFeature />} />
@@ -52,7 +52,7 @@ export const AppRoutes = () => {
           <Route path="ops/alerts-diagnostics" element={<AlertsDiagnostics />} />
           <Route path="ops/log-viewer" element={<LogViewer />} />
           <Route path="ops/ai-insights" element={<AIInsights />} />
-          <Route path="*" element={<Navigate to="/dashboard" replace />} />
+          <Route path="*" element={<Navigate to="/ops/command-center" replace />} />
         </Route>
       </Routes>
     </BrowserRouter>

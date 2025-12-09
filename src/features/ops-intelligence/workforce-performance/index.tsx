@@ -7,7 +7,7 @@
  */
 import { useState, useMemo } from 'react'
 import { Box, Typography, Card, CardContent, Grid, LinearProgress, Chip, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Container, Tabs, Tab, useTheme } from '@mui/material'
-import { Speed, Person, AccessTime, CheckCircle, BarChart, TrendingUp, Work, Inventory2, LocalShipping, ShoppingCart, Inventory } from '@mui/icons-material'
+import { Speed, Person, AccessTime, CheckCircle, BarChart, TrendingUp, Work } from '@mui/icons-material'
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts'
 import { iconColors } from '../../../theme/theme'
 

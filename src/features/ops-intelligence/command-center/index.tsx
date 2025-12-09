@@ -6,7 +6,7 @@
  * Pulls from WES order status, WCS task summaries, Data Lake roll-ups
  */
 import { Box, Typography, Card, CardContent, Grid, LinearProgress, Chip, Container, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material'
-import { ControlCamera, TrendingUp, TrendingDown, LocationOn } from '@mui/icons-material'
+import { ControlCamera, TrendingUp, TrendingDown } from '@mui/icons-material'
 import { iconColors } from '../../../theme/theme'
 
 interface MetricCardProps {

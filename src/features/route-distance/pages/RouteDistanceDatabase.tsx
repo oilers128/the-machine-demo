@@ -195,7 +195,7 @@ export default function RouteDistanceDatabase() {
 
       {error && (
         <Alert severity="error" sx={{ mb: 2 }} onClose={() => setError('')}>
-          {error}
+          {error instanceof Error ? error.message : typeof error === 'string' ? error : String(error || '')}
         </Alert>
       )}
 

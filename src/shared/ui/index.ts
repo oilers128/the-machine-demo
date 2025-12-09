@@ -25,6 +25,7 @@ export type { AppBarProps, SidebarProps, MainContentProps } from './layout'
 // ErrorAlert
 export { ErrorAlert } from './ErrorAlert'
 export type { ErrorAlertProps } from './ErrorAlert'
+export { ErrorBoundary } from './ErrorBoundary'
 
 // Logo
 export { Logo } from './Logo'

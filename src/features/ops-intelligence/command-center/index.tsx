@@ -5,8 +5,8 @@
  * Aggregated KPIs, flow metrics, WIP, throughput, SLAs, bottlenecks
  * Pulls from WES order status, WCS task summaries, Data Lake roll-ups
  */
-import { Box, Typography, Card, CardContent, Grid, LinearProgress, Chip, Container } from '@mui/material'
-import { ControlCamera, TrendingUp, TrendingDown } from '@mui/icons-material'
+import { Box, Typography, Card, CardContent, Grid, LinearProgress, Chip, Container, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material'
+import { ControlCamera, TrendingUp, TrendingDown, LocationOn } from '@mui/icons-material'
 import { iconColors } from '../../../theme/theme'
 
 interface MetricCardProps {
@@ -93,6 +93,15 @@ const MetricCard = ({ title, value, subtitle, trend, trendValue, icon }: MetricC
 }
 
 export default function CommandCenter() {
+  const agedOrders = [
+    { orderId: 'ORD-12345', sku: 'SKU-12345', age: 2, priority: 'medium', location: 'A-12-34', units: 2, status: 'pending' },
+    { orderId: 'ORD-12346', sku: 'SKU-23456', age: 1, priority: 'low', location: 'B-23-45', units: 4, status: 'pending' },
+    { orderId: 'ORD-12347', sku: 'SKU-34567', age: 1, priority: 'low', location: 'C-34-56', units: 3, status: 'in-progress' },
+    { orderId: 'ORD-12348', sku: 'SKU-45678', age: 2, priority: 'medium', location: 'A-15-22', units: 5, status: 'pending' },
+    { orderId: 'ORD-12349', sku: 'SKU-56789', ageHours: 11, priority: 'low', location: 'B-08-11', units: 3, status: 'in-progress' },
+    { orderId: 'ORD-12350', sku: 'SKU-67890', ageHours: 11, priority: 'low', location: 'C-22-33', units: 4, status: 'pending' },
+  ]
+
   return (
     <Container maxWidth="xl" sx={{ py: 4 }}>
       {/* Header */}
@@ -116,18 +125,18 @@ export default function CommandCenter() {
         <Grid size={{ xs: 12, sm: 6, md: 3 }}>
           <MetricCard
             title="Orders Processed Today"
-            value="1,247"
-            subtitle="Target: 1,200"
+            value="12,263"
+            subtitle="Target: 12,000"
             trend="up"
-            trendValue="+3.9% vs plan"
+            trendValue="+2.2% vs plan"
             icon={<ControlCamera />}
           />
         </Grid>
         <Grid size={{ xs: 12, sm: 6, md: 3 }}>
           <MetricCard
             title="Lines Processed"
-            value="8,934"
-            subtitle="Avg: 7.2 lines/order"
+            value="28,205"
+            subtitle="Avg: 2.3 lines/order"
             trend="up"
             trendValue="+5.2% vs plan"
           />
@@ -135,8 +144,8 @@ export default function CommandCenter() {
         <Grid size={{ xs: 12, sm: 6, md: 3 }}>
           <MetricCard
             title="Units Shipped"
-            value="12,456"
-            subtitle="Last hour: 523 units"
+            value="39,243"
+            subtitle="Avg: 3.2 units/order"
             trend="up"
             trendValue="+2.1% vs plan"
           />
@@ -206,46 +215,86 @@ export default function CommandCenter() {
           >
             <CardContent sx={{ flex: 1, display: 'flex', flexDirection: 'column', p: 3 }}>
               <Typography variant="h6" gutterBottom sx={{ fontWeight: 600, mb: 3, textAlign: 'center' }}>
-                Current Flow Status & Bottlenecks
+                Aged Orders
               </Typography>
-              <Box sx={{ flex: 1 }}>
-                {[
-                  { area: 'Receiving', status: 'normal', throughput: '125 units/hr' },
-                  { area: 'Putaway', status: 'normal', throughput: '118 units/hr' },
-                  { area: 'Picking Zone A', status: 'bottleneck', throughput: '89 units/hr' },
-                  { area: 'Packing', status: 'normal', throughput: '142 units/hr' },
-                  { area: 'Shipping', status: 'normal', throughput: '156 units/hr' },
-                ].map((item, index) => (
-                  <Box
-                    key={item.area}
-                    sx={{
-                      display: 'flex',
-                      justifyContent: 'space-between',
-                      alignItems: 'center',
-                      py: 1.5,
-                      borderBottom: index < 4 ? '1px solid' : 'none',
-                      borderColor: 'divider',
-                    }}
-                  >
-                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
-                      <Box
-                        sx={{
-                          width: 10,
-                          height: 10,
-                          borderRadius: '50%',
-                          bgcolor: item.status === 'bottleneck' ? 'warning.main' : 'success.main',
-                        }}
-                      />
-                      <Typography variant="body2" sx={{ fontWeight: 500 }}>
-                        {item.area}
+              <Box sx={{ mb: 2 }}>
+                <Grid container spacing={2}>
+                  <Grid size={{ xs: 6 }}>
+                    <Box sx={{ textAlign: 'center' }}>
+                      <Typography variant="body2" color="text.secondary" sx={{ mb: 0.5 }}>
+                        Total Aged Orders
+                      </Typography>
+                      <Typography variant="h5" sx={{ fontWeight: 600 }}>
+                        {agedOrders.length}
                       </Typography>
                     </Box>
-                    <Typography variant="body2" color="text.secondary" sx={{ fontWeight: 500 }}>
-                      {item.throughput}
-                    </Typography>
-                  </Box>
-                ))}
+                  </Grid>
+                  <Grid size={{ xs: 6 }}>
+                    <Box sx={{ textAlign: 'center' }}>
+                      <Typography variant="body2" color="text.secondary" sx={{ mb: 0.5 }}>
+                        Critical (7+ days)
+                      </Typography>
+                      <Typography variant="h5" sx={{ fontWeight: 600, color: 'error.main' }}>
+                        {agedOrders.filter(o => {
+                          const age = (o.age ?? 0) || ((o.ageHours ?? 0) / 24)
+                          return age >= 7
+                        }).length}
+                      </Typography>
+                    </Box>
+                  </Grid>
+                </Grid>
               </Box>
+              <TableContainer>
+                <Table size="small">
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>Order ID</TableCell>
+                      <TableCell>Age</TableCell>
+                      <TableCell>Priority</TableCell>
+                      <TableCell>Units</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {agedOrders
+                      .sort((a, b) => {
+                        const ageA = (a.age ?? 0) || ((a.ageHours ?? 0) / 24)
+                        const ageB = (b.age ?? 0) || ((b.ageHours ?? 0) / 24)
+                        return ageB - ageA
+                      })
+                      .slice(0, 5)
+                      .map((order) => {
+                        const ageValue = (order.age ?? 0) || ((order.ageHours ?? 0) / 24)
+                        const ageDisplay = order.ageHours !== undefined
+                          ? `${order.ageHours} hours`
+                          : `${order.age ?? 0} days`
+                        const chipColor = ageValue >= 7 ? 'error' : ageValue >= 5 ? 'warning' : ageValue >= 2 ? 'warning' : 'default'
+                        
+                        return (
+                          <TableRow key={order.orderId} hover>
+                            <TableCell sx={{ fontWeight: 500 }}>{order.orderId}</TableCell>
+                            <TableCell>
+                              <Chip
+                                label={ageDisplay}
+                                size="small"
+                                color={chipColor as 'error' | 'warning' | 'default'}
+                                sx={{ height: 20 }}
+                              />
+                            </TableCell>
+                            <TableCell>
+                              <Chip
+                                label={order.priority}
+                                size="small"
+                                color={order.priority === 'critical' ? 'error' : order.priority === 'high' ? 'warning' : 'default'}
+                                sx={{ height: 20, textTransform: 'capitalize' }}
+                              />
+                            </TableCell>
+                            <TableCell>{order.units}</TableCell>
+                          </TableRow>
+                        )
+                      })}
+                  </TableBody>
+                </Table>
+              </TableContainer>
             </CardContent>
           </Card>
         </Grid>
@@ -261,9 +310,9 @@ export default function CommandCenter() {
               </Typography>
               <Grid container spacing={3}>
                 {[
-                  { metric: 'Orders', actual: 1247, plan: 1200, unit: 'orders' },
-                  { metric: 'Lines', actual: 8934, plan: 8500, unit: 'lines' },
-                  { metric: 'Units', actual: 12456, plan: 12000, unit: 'units' },
+                  { metric: 'Orders', actual: 12263, plan: 12000, unit: 'orders' },
+                  { metric: 'Lines', actual: 28205, plan: 27600, unit: 'lines' },
+                  { metric: 'Units', actual: 39243, plan: 38400, unit: 'units' },
                 ].map((item) => {
                   const percent = ((item.actual / item.plan) * 100).toFixed(1)
                   const isAbovePlan = item.actual >= item.plan

@@ -18,7 +18,7 @@ interface AvatarState {
 
 export const useMicrosoftEntraAvatar = (): AvatarState => {
   const [avatarUrl] = useState<string | null>(null)
-  const [initials] = useState('DM') // Demo initials
+  const [initials] = useState('JW') // Joe Weiss initials
   const [isLoading] = useState(false)
   
   const account = useMemo(() => {
@@ -27,7 +27,7 @@ export const useMicrosoftEntraAvatar = (): AvatarState => {
       environment: 'demo',
       tenantId: 'demo',
       username: 'demo@themachine.com',
-      name: 'Demo User',
+      name: 'Joe Weiss',
       localAccountId: 'demo',
     }
   }, [])

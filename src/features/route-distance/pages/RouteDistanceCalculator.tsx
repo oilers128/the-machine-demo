@@ -538,7 +538,9 @@ export default function RouteDistanceCalculator() {
             <Typography variant="body1" fontWeight="bold" gutterBottom>
               Processing Failed
             </Typography>
-            <Typography variant="body2">{error || 'An unknown error occurred'}</Typography>
+            <Typography variant="body2">
+              {error instanceof Error ? error.message : typeof error === 'string' ? error : String(error || 'An unknown error occurred')}
+            </Typography>
             <Box sx={{ mt: 2, display: 'flex', gap: 2 }}>
               <Button variant="outlined" onClick={reset}>
                 Start Over
